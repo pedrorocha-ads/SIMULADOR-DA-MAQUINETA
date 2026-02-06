@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Vendas no Cartão</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Simulador de Parcelamento</h1>
+            <p>Simule quanto seu cliente irá pagar em cada parcela.</p>
+        </header>
+
+        <div class="simulator-box">
+            <div class="input-group">
+                <label for="amount">Valor da Venda (R$)</label>
+                <input type="number" id="amount" placeholder="0,00" step="0.01">
+            </div>
+
+            <div class="input-group">
+                <label for="brand">Bandeira do Cartão</label>
+                <select id="brand">
+                    <option value="master">Mastercard</option>
+                    <option value="visa">Visa</option>
+                    <option value="elo">Elo</option>
+                </select>
+            </div>
+
+            <div class="results-area">
+                <h3>Opções de Parcelamento</h3>
+                <div class="table-header">
+                    <span>Parcelas</span>
+                    <span>Valor da Parcela</span>
+                    <span>Total a Pagar</span>
+                </div>
+                <div id="results-list" class="results-list">
+                    <!-- Os resultados serão gerados aqui pelo JavaScript -->
+                    <div class="empty-state">Digite um valor para simular.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
