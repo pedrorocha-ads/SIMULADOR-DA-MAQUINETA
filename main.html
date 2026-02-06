@@ -7,10 +7,11 @@
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
+    <img src="LogoRealPadrão.jpeg" alt="Real Padrão Logo" class="top-logo">
 
     <div class="container">
         <header>
-            <h1>Simulador de Parcelamento</h1>
+            <h1>RealPix</h1>
             <p>Simule quanto seu cliente irá pagar em cada parcela.</p>
         </header>
 
@@ -21,11 +22,12 @@
             </div>
 
             <div class="input-group">
-                <label for="brand">Bandeira do Cartão</label>
+                <label for="brand">Tabelas</label>
                 <select id="brand">
-                    <option value="master">Mastercard</option>
-                    <option value="visa">Visa</option>
-                    <option value="elo">Elo</option>
+                    <option value="master">Tabela 10</option>
+                    <option value="visa">Tabela 15</option>
+                    <option value="elo">Tabela 20</option>
+                    <option value="elo">Tabela 25</option>
                 </select>
             </div>
 
@@ -37,7 +39,7 @@
                     <span>Total a Pagar</span>
                 </div>
                 <div id="results-list" class="results-list">
-                    <!-- Os resultados serão gerados aqui pelo JavaScript -->
+                    
                     <div class="empty-state">Digite um valor para simular.</div>
                 </div>
             </div>

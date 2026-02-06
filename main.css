@@ -14,6 +14,14 @@ body {
     justify-content: center;
     padding: 20px;
     margin: 0;
+    position: relative; /* Ensure absolute positioning works relative to body only if needed, but usually absolute goes to viewport if body is static. Wait, body is flex. */
+}
+
+.top-logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 250px; 
 }
 
 .container {
