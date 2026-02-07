@@ -16,31 +16,138 @@
         </header>
 
         <div class="simulator-box">
-            <div class="input-group">
-                <label for="amount">Valor da Venda (R$)</label>
-                <input type="number" id="amount" placeholder="0,00" step="0.01">
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="valor">Valor da Venda</label>
+                    <input type="number" id="valor" placeholder="R$ 0,00" step="0.01">
+                </div>
+                <div class="input-group">
+                    <label for="numParcelas">Nº de Parcelas</label>
+                    <select id="numParcelas">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                </div>
             </div>
 
-            <div class="input-group">
-                <label for="brand">Tabelas</label>
-                <select id="brand">
-                    <option value="master">Tabela 10</option>
-                    <option value="visa">Tabela 15</option>
-                    <option value="elo">Tabela 20</option>
-                    <option value="elo">Tabela 25</option>
-                </select>
+            <div class="separator">OU</div>
+
+            <div class="input-row">
+                 <div class="input-group">
+                    <label for="valorParcela">Valor da Parcela</label>
+                    <input type="number" id="valorParcela" placeholder="R$ 100,00">
+                </div>
+                 <div class="input-group">
+                    <label for="prazo">Prazo (meses)</label>
+                    <select id="prazo">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="static-table-area">
+                <div class="table-header-4-cols">
+                    <div>Tabelas</div>
+                    <div>Cliente Paga</div>
+                    <div>Parcela</div>
+                    <div>Você Recebe</div>
+                </div>
+                <div class="result-row-4-cols" data-table-id="10">
+                    <div>Tabela 10</div>
+                    <div data-col="cliente-paga">-</div>
+                    <div data-col="parcela">-</div>
+                    <div data-col="voce-recebe">-</div>
+                </div>
+                <div class="result-row-4-cols" data-table-id="15">
+                    <div>Tabela 15</div>
+                    <div data-col="cliente-paga">-</div>
+                    <div data-col="parcela">-</div>
+                    <div data-col="voce-recebe">-</div>
+                </div>
+                <div class="result-row-4-cols" data-table-id="20">
+                    <div>Tabela 20</div>
+                    <div data-col="cliente-paga">-</div>
+                    <div data-col="parcela">-</div>
+                    <div data-col="voce-recebe">-</div>
+                </div>
+                <div class="result-row-4-cols" data-table-id="25">
+                    <div>Tabela 25</div>
+                    <div data-col="cliente-paga">-</div>
+                    <div data-col="parcela">-</div>
+                    <div data-col="voce-recebe">-</div>
+                </div>
             </div>
 
             <div class="results-area">
-                <h3>Opções de Parcelamento</h3>
+                <h3>Outras Oportunidades</h3>
+            </div>
+
+            <div class="results-area">
+                <h4>Tabela 10</h4>
                 <div class="table-header">
                     <span>Parcelas</span>
                     <span>Valor da Parcela</span>
                     <span>Total a Pagar</span>
                 </div>
-                <div id="results-list" class="results-list">
-                    
-                    <div class="empty-state">Digite um valor para simular.</div>
+                <div id="results-list-10" class="results-list">
+                    <div class="empty-state">Preencha o valor da venda.</div>
+                </div>
+            </div>
+
+            <div class="results-area">
+                <h4>Tabela 15</h4>
+                <div class="table-header">
+                    <span>Parcelas</span>
+                    <span>Valor da Parcela</span>
+                    <span>Total a Pagar</span>
+                </div>
+                <div id="results-list-15" class="results-list">
+                     <div class="empty-state">Preencha o valor da venda.</div>
+                </div>
+            </div>
+
+            <div class="results-area">
+                <h4>Tabela 20</h4>
+                <div class="table-header">
+                    <span>Parcelas</span>
+                    <span>Valor da Parcela</span>
+                    <span>Total a Pagar</span>
+                </div>
+                <div id="results-list-20" class="results-list">
+                     <div class="empty-state">Preencha o valor da venda.</div>
+                </div>
+            </div>
+            
+            <div class="results-area">
+                <h4>Tabela 25</h4>
+                <div class="table-header">
+                    <span>Parcelas</span>
+                    <span>Valor da Parcela</span>
+                    <span>Total a Pagar</span>
+                </div>
+                <div id="results-list-25" class="results-list">
+                     <div class="empty-state">Preencha o valor da venda.</div>
                 </div>
             </div>
         </div>
