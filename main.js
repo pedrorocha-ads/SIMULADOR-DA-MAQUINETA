@@ -145,8 +145,9 @@ function calcularComValorParcela() {
     if (valorParcela > 0 && numParcelas > 0) {
         const tabelaReferencia = fatores['10'];
         if (tabelaReferencia && tabelaReferencia[numParcelas]) {
-            const fator = tabelaReferencia[numParcelas].fatorParcela;
-            const valorVendaCalculado = valorParcela / fator;
+            const fatorTotal = tabelaReferencia[numParcelas].fatorTotal;
+            const totalClientePaga = valorParcela * numParcelas;
+            const valorVendaCalculado = totalClientePaga / fatorTotal;
             valorVendaInput.value = valorVendaCalculado.toFixed(2);
             calcularComValorVenda();
         }
