@@ -67,14 +67,7 @@ const formatCurrency = (value) => {
     return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
-function calcularComValorVenda() {
-    const valorVenda = parseFloat(valorVendaInput.value) || 0;
-    const numParcelas = parseInt(numParcelasInput.value) || 0;
-    
-    if (document.activeElement !== valorParcelaInput && document.activeElement !== prazoInput) {
-        valorParcelaInput.value = '';
-    }
-
+function atualizarTabelas(valorVenda, numParcelas) {
     document.querySelectorAll('.result-row-4-cols').forEach(row => {
         const tableId = row.dataset.tableId;
         const tabelaFatores = fatores[tableId];
@@ -99,6 +92,18 @@ function calcularComValorVenda() {
     });
 
     preencherTabelasOportunidades(valorVenda);
+}
+
+function calcularComValorVenda() {
+    const valorVenda = parseFloat(valorVendaInput.value) || 0;
+    const numParcelas = parseInt(numParcelasInput.value) || 0;
+    
+    // Se o usuário está digitando aqui, limpa os campos de baixo
+    if (document.activeElement === valorVendaInput || document.activeElement === numParcelasInput) {
+         valorParcelaInput.value = '';
+    }
+
+    atualizarTabelas(valorVenda, numParcelas);
 }
 
 function preencherTabelasOportunidades(valorVenda) {
@@ -139,19 +144,24 @@ function calcularComValorParcela() {
     const valorParcela = parseFloat(valorParcelaInput.value) || 0;
     const prazo = parseInt(prazoInput.value) || 0;
     
+    // Se digitou embaixo, limpa o valor da venda em cima
+    valorVendaInput.value = '';
+    
     if (valorParcela > 0 && prazo > 0) {
         const tabelaReferencia = fatores['10'];
         if (tabelaReferencia && tabelaReferencia[prazo]) {
             const fator = tabelaReferencia[prazo].fatorParcela;
-            // Cálculo reverso usando o fator da parcela (coeficiente), e não a multiplicação direta
+            // Cálculo reverso usando o fator da parcela
             const valorVendaCalculado = valorParcela / fator;
             
-            valorVendaInput.value = valorVendaCalculado.toFixed(2);
-            numParcelasInput.value = prazo;
-            
-            calcularComValorVenda();
+            // Atualiza tabelas com o valor calculado, mas SEM preencher o input de cima
+            atualizarTabelas(valorVendaCalculado, prazo);
+            return;
         }
     }
+    
+    // Se não for válido, zera tabelas
+    atualizarTabelas(0, 0);
 }
 
 valorVendaInput.addEventListener('input', calcularComValorVenda);
