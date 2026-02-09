@@ -142,9 +142,9 @@ function calcularComValorParcela() {
     if (valorParcela > 0 && prazo > 0) {
         const tabelaReferencia = fatores['10'];
         if (tabelaReferencia && tabelaReferencia[prazo]) {
-            const fatorTotal = tabelaReferencia[prazo].fatorTotal;
-            const totalClientePaga = valorParcela * prazo;
-            const valorVendaCalculado = totalClientePaga / fatorTotal;
+            const fator = tabelaReferencia[prazo].fatorParcela;
+            // Cálculo reverso usando o fator da parcela (coeficiente), e não a multiplicação direta
+            const valorVendaCalculado = valorParcela / fator;
             
             valorVendaInput.value = valorVendaCalculado.toFixed(2);
             numParcelasInput.value = prazo;
