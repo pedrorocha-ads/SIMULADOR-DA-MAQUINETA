@@ -60,6 +60,7 @@ const fatores = {
 const valorVendaInput = document.getElementById('valor');
 const numParcelasInput = document.getElementById('numParcelas');
 const valorParcelaInput = document.getElementById('valorParcela');
+const prazoInput = document.getElementById('prazo');
 
 const formatCurrency = (value) => {
     if (isNaN(value) || value === null) return '-';
@@ -70,7 +71,7 @@ function calcularComValorVenda() {
     const valorVenda = parseFloat(valorVendaInput.value) || 0;
     const numParcelas = parseInt(numParcelasInput.value) || 0;
     
-    if (document.activeElement !== valorParcelaInput) {
+    if (document.activeElement !== valorParcelaInput && document.activeElement !== prazoInput) {
         valorParcelaInput.value = '';
     }
 
@@ -136,38 +137,27 @@ function preencherTabelasOportunidades(valorVenda) {
 
 function calcularComValorParcela() {
     const valorParcela = parseFloat(valorParcelaInput.value) || 0;
-    const numParcelas = parseInt(numParcelasInput.value) || 0;
+    const prazo = parseInt(prazoInput.value) || 0;
     
-    if (document.activeElement !== valorVendaInput) {
-         valorVendaInput.value = '';
-    }
-   
-    if (valorParcela > 0 && numParcelas > 0) {
+    if (valorParcela > 0 && prazo > 0) {
         const tabelaReferencia = fatores['10'];
-        if (tabelaReferencia && tabelaReferencia[numParcelas]) {
-            const fatorTotal = tabelaReferencia[numParcelas].fatorTotal;
-            const totalClientePaga = valorParcela * numParcelas;
+        if (tabelaReferencia && tabelaReferencia[prazo]) {
+            const fatorTotal = tabelaReferencia[prazo].fatorTotal;
+            const totalClientePaga = valorParcela * prazo;
             const valorVendaCalculado = totalClientePaga / fatorTotal;
+            
             valorVendaInput.value = valorVendaCalculado.toFixed(2);
+            numParcelasInput.value = prazo;
+            
             calcularComValorVenda();
         }
-    } else if (numParcelas > 0) {
-        calcularComValorVenda();
-    }
-}
-
-function handleNumParcelasChange() {
-    if (valorVendaInput.value) {
-        calcularComValorVenda();
-    } else if (valorParcelaInput.value) {
-        calcularComValorParcela();
-    } else {
-        calcularComValorVenda();
     }
 }
 
 valorVendaInput.addEventListener('input', calcularComValorVenda);
+numParcelasInput.addEventListener('change', calcularComValorVenda);
+
 valorParcelaInput.addEventListener('input', calcularComValorParcela);
-numParcelasInput.addEventListener('input', handleNumParcelasChange);
+prazoInput.addEventListener('change', calcularComValorParcela);
 
 preencherTabelasOportunidades(0);
