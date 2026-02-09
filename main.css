@@ -88,7 +88,7 @@ header h1 {
     text-align: center;
     font-weight: bold;
     color: #9ca3af;
-    margin: -0.5rem 0 1rem 0;
+    margin: 1rem 0;
 }
 
 .static-table-area {
@@ -96,26 +96,26 @@ header h1 {
 }
 
 .results-area {
-    margin-top: 2rem;
+    margin-top: 0.5rem;
     border-top: 1px solid var(--border-color);
-    padding-top: 1rem;
+    padding-top: 0.5rem;
 }
 
 .results-area h4 {
     text-align: center;
     color: var(--primary-color);
     margin-top: 0;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 .table-header {
     display: grid;
     grid-template-columns: 1fr 1.5fr 1.5fr;
     font-weight: bold;
-    padding: 10px;
+    padding: 8px 10px;
     background-color: #f8fafc;
     border-radius: 6px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     font-size: 0.9rem;
 }
 
@@ -127,15 +127,15 @@ header h1 {
 
 .table-header-4-cols {
     font-weight: bold;
-    padding: 10px;
+    padding: 8px 10px;
     background-color: #f8fafc;
     border-radius: 6px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     font-size: 0.9rem;
 }
 
 .result-row-4-cols {
-    padding: 12px 10px;
+    padding: 8px 10px;
     border-bottom: 1px solid var(--border-color);
 }
 
@@ -146,7 +146,7 @@ header h1 {
 .installment-row {
     display: grid;
     grid-template-columns: 1fr 1.5fr 1.5fr;
-    padding: 12px 10px;
+    padding: 8px 10px;
     border-bottom: 1px solid var(--border-color);
     transition: background-color 0.2s;
 }
@@ -169,6 +169,13 @@ header h1 {
     padding: 20px;
     color: #9ca3af;
     font-style: italic;
+}
+
+.option-card {
+    background-color: #f8fafc;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
 }
 
 @media (max-width: 768px) {
