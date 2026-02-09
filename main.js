@@ -67,7 +67,22 @@ const formatCurrency = (value) => {
     return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
-function atualizarTabelas(valorVenda, numParcelas) {
+function atualizarTabelas(valorInput, numParcelas, modo) {
+    let valorVendaBase = 0;
+
+    // Se for modo 'venda', valorInput é o valor que VOCÊ RECEBE
+    if (modo === 'venda') {
+        valorVendaBase = valorInput;
+    } 
+    // Se for modo 'parcela', calculamos uma base apenas para gerar as tabelas de "Outras Oportunidades"
+    // usando a Tabela 10 como referência padrão
+    else if (modo === 'parcela' && valorInput > 0 && numParcelas > 0) {
+         const tabelaReferencia = fatores['10'];
+         if (tabelaReferencia && tabelaReferencia[numParcelas]) {
+             valorVendaBase = valorInput / tabelaReferencia[numParcelas].fatorParcela;
+         }
+    }
+
     document.querySelectorAll('.result-row-4-cols').forEach(row => {
         const tableId = row.dataset.tableId;
         const tabelaFatores = fatores[tableId];
@@ -76,14 +91,33 @@ function atualizarTabelas(valorVenda, numParcelas) {
         const colParcela = row.querySelector('[data-col="parcela"]');
         const colVoceRecebe = row.querySelector('[data-col="voce-recebe"]');
 
-        if (valorVenda > 0 && numParcelas > 0 && tabelaFatores && tabelaFatores[numParcelas]) {
-            const fator = tabelaFatores[numParcelas].fatorTotal;
-            const totalClientePaga = valorVenda * fator;
-            const valorDaParcela = totalClientePaga / numParcelas;
+        let totalClientePaga, valorDaParcela, valorVoceRecebe;
+        let valido = false;
 
+        if (valorInput > 0 && numParcelas > 0 && tabelaFatores && tabelaFatores[numParcelas]) {
+            if (modo === 'venda') {
+                // Modo VENDA: O valor de venda (recebido) é fixo
+                valorVoceRecebe = valorInput;
+                const fator = tabelaFatores[numParcelas].fatorTotal;
+                totalClientePaga = valorVoceRecebe * fator;
+                valorDaParcela = totalClientePaga / numParcelas;
+                valido = true;
+            } else {
+                // Modo PARCELA: O valor da parcela é fixo
+                valorDaParcela = valorInput;
+                totalClientePaga = valorDaParcela * numParcelas;
+                
+                // Cálculo reverso para achar quando você recebe
+                const fatorParcela = tabelaFatores[numParcelas].fatorParcela;
+                valorVoceRecebe = valorDaParcela / fatorParcela;
+                valido = true;
+            }
+        }
+
+        if (valido) {
             colClientePaga.textContent = formatCurrency(totalClientePaga);
             colParcela.textContent = formatCurrency(valorDaParcela);
-            colVoceRecebe.textContent = formatCurrency(valorVenda);
+            colVoceRecebe.textContent = formatCurrency(valorVoceRecebe);
         } else {
             colClientePaga.textContent = '-';
             colParcela.textContent = '-';
@@ -91,77 +125,27 @@ function atualizarTabelas(valorVenda, numParcelas) {
         }
     });
 
-    preencherTabelasOportunidades(valorVenda);
+    preencherTabelasOportunidades(valorVendaBase);
 }
 
 function calcularComValorVenda() {
     const valorVenda = parseFloat(valorVendaInput.value) || 0;
     const numParcelas = parseInt(numParcelasInput.value) || 0;
     
-    // Se o usuário está digitando aqui, limpa os campos de baixo
     if (document.activeElement === valorVendaInput || document.activeElement === numParcelasInput) {
          valorParcelaInput.value = '';
     }
 
-    atualizarTabelas(valorVenda, numParcelas);
-}
-
-function preencherTabelasOportunidades(valorVenda) {
-    const tableIds = ['10', '15', '20', '25'];
-
-    tableIds.forEach(id => {
-        const resultsList = document.getElementById(`results-list-${id}`);
-        resultsList.innerHTML = '';
-
-        if (!valorVenda || valorVenda <= 0) {
-            resultsList.innerHTML = '<div class="empty-state">Preencha o valor da venda.</div>';
-            return;
-        }
-
-        const tabelaFatores = fatores[id];
-        if (!tabelaFatores) return;
-
-        for (let i = 1; i <= 12; i++) {
-            if (tabelaFatores[i]) {
-                const fator = tabelaFatores[i].fatorTotal;
-                const totalClientePaga = valorVenda * fator;
-                const valorDaParcela = totalClientePaga / i;
-
-                const row = document.createElement('div');
-                row.className = 'installment-row';
-                row.innerHTML = `
-                    <div>${i}x</div>
-                    <div>${formatCurrency(valorDaParcela)}</div>
-                    <div class="total-value">${formatCurrency(totalClientePaga)}</div>
-                `;
-                resultsList.appendChild(row);
-            }
-        }
-    });
+    atualizarTabelas(valorVenda, numParcelas, 'venda');
 }
 
 function calcularComValorParcela() {
     const valorParcela = parseFloat(valorParcelaInput.value) || 0;
     const prazo = parseInt(prazoInput.value) || 0;
     
-    // Se digitou embaixo, limpa o valor da venda em cima
     valorVendaInput.value = '';
     
-    if (valorParcela > 0 && prazo > 0) {
-        const tabelaReferencia = fatores['10'];
-        if (tabelaReferencia && tabelaReferencia[prazo]) {
-            const fator = tabelaReferencia[prazo].fatorParcela;
-            // Cálculo reverso usando o fator da parcela
-            const valorVendaCalculado = valorParcela / fator;
-            
-            // Atualiza tabelas com o valor calculado, mas SEM preencher o input de cima
-            atualizarTabelas(valorVendaCalculado, prazo);
-            return;
-        }
-    }
-    
-    // Se não for válido, zera tabelas
-    atualizarTabelas(0, 0);
+    atualizarTabelas(valorParcela, prazo, 'parcela');
 }
 
 valorVendaInput.addEventListener('input', calcularComValorVenda);
