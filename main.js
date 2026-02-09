@@ -139,6 +139,40 @@ function calcularComValorVenda() {
     atualizarTabelas(valorVenda, numParcelas, 'venda');
 }
 
+function preencherTabelasOportunidades(valorVenda) {
+    const tableIds = ['10', '15', '20', '25'];
+
+    tableIds.forEach(id => {
+        const resultsList = document.getElementById(`results-list-${id}`);
+        resultsList.innerHTML = '';
+
+        if (!valorVenda || valorVenda <= 0) {
+            resultsList.innerHTML = '<div class="empty-state">Preencha o valor da venda.</div>';
+            return;
+        }
+
+        const tabelaFatores = fatores[id];
+        if (!tabelaFatores) return;
+
+        for (let i = 1; i <= 12; i++) {
+            if (tabelaFatores[i]) {
+                const fator = tabelaFatores[i].fatorTotal;
+                const totalClientePaga = valorVenda * fator;
+                const valorDaParcela = totalClientePaga / i;
+
+                const row = document.createElement('div');
+                row.className = 'installment-row';
+                row.innerHTML = `
+                    <div>${i}x</div>
+                    <div>${formatCurrency(valorDaParcela)}</div>
+                    <div class="total-value">${formatCurrency(totalClientePaga)}</div>
+                `;
+                resultsList.appendChild(row);
+            }
+        }
+    });
+}
+
 function calcularComValorParcela() {
     const valorParcela = parseFloat(valorParcelaInput.value) || 0;
     const prazo = parseInt(prazoInput.value) || 0;
