@@ -89,7 +89,7 @@ function atualizarTabelas(valorInput, numParcelas, modo) {
 
         const colClientePaga = row.querySelector('[data-col="cliente-paga"]');
         const colParcela = row.querySelector('[data-col="parcela"]');
-        const colVoceRecebe = row.querySelector('[data-col="voce-recebe"]');
+        // Coluna "voce-recebe" removida da interface
 
         let totalClientePaga, valorDaParcela, valorVoceRecebe;
         let valido = false;
@@ -117,11 +117,9 @@ function atualizarTabelas(valorInput, numParcelas, modo) {
         if (valido) {
             colClientePaga.textContent = formatCurrency(totalClientePaga);
             colParcela.textContent = formatCurrency(valorDaParcela);
-            colVoceRecebe.textContent = formatCurrency(valorVoceRecebe);
         } else {
             colClientePaga.textContent = '-';
             colParcela.textContent = '-';
-            colVoceRecebe.textContent = '-';
         }
     });
 
