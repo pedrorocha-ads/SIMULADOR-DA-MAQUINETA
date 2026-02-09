@@ -1,5 +1,5 @@
 const fatores = {
-    '10': { 
+    'A': { 
         1: { fatorTotal: 1.1354, fatorParcela: 1.13543 },
         2: { fatorTotal: 1.1485, fatorParcela: 0.57423 },
         3: { fatorTotal: 1.1558, fatorParcela: 0.38528 },
@@ -13,7 +13,7 @@ const fatores = {
         11: { fatorTotal: 1.2190, fatorParcela: 0.11082 },
         12: { fatorTotal: 1.2330, fatorParcela: 0.10275 }
     },
-    '15': { 
+    'B': { 
         1: { fatorTotal: 1.1870, fatorParcela: 1.18704 },
         2: { fatorTotal: 1.2007, fatorParcela: 0.60033 },
         3: { fatorTotal: 1.2084, fatorParcela: 0.40279 },
@@ -27,7 +27,7 @@ const fatores = {
         11: { fatorTotal: 1.2744, fatorParcela: 0.11585 },
         12: { fatorTotal: 1.2891, fatorParcela: 0.10742 }
     },
-    '20': { 
+    'C': { 
         1: { fatorTotal: 1.2386, fatorParcela: 1.23865 },
         2: { fatorTotal: 1.2529, fatorParcela: 0.62644 },
         3: { fatorTotal: 1.2609, fatorParcela: 0.42030 },
@@ -41,7 +41,7 @@ const fatores = {
         11: { fatorTotal: 1.3298, fatorParcela: 0.12089 },
         12: { fatorTotal: 1.3451, fatorParcela: 0.11210 }
      },
-    '25': { 
+    'D': { 
         1: { fatorTotal: 1.2903, fatorParcela: 1.29026 },
         2: { fatorTotal: 1.3051, fatorParcela: 0.65254 },
         3: { fatorTotal: 1.3134, fatorParcela: 0.43781 },
@@ -75,9 +75,9 @@ function atualizarTabelas(valorInput, numParcelas, modo) {
         valorVendaBase = valorInput;
     } 
     // Se for modo 'parcela', calculamos uma base apenas para gerar as tabelas de "Outras Oportunidades"
-    // usando a Tabela 10 como referência padrão
+    // usando a Tabela A como referência padrão
     else if (modo === 'parcela' && valorInput > 0 && numParcelas > 0) {
-         const tabelaReferencia = fatores['10'];
+         const tabelaReferencia = fatores['A'];
          if (tabelaReferencia && tabelaReferencia[numParcelas]) {
              valorVendaBase = valorInput / tabelaReferencia[numParcelas].fatorParcela;
          }
@@ -140,7 +140,7 @@ function calcularComValorVenda() {
 }
 
 function preencherTabelasOportunidades(valorVenda) {
-    const tableIds = ['10', '15', '20', '25'];
+    const tableIds = ['A', 'B', 'C', 'D'];
 
     tableIds.forEach(id => {
         const resultsList = document.getElementById(`results-list-${id}`);
